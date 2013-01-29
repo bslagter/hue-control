@@ -13,6 +13,8 @@ use \HueControl\Client\Client;
 require_once( __DIR__ . '/Autoload.php');
 spl_autoload_register(array('HueControl\Autoload', 'autoload'));
 
+echo "<pre>";
+
 //
 // Load config,
 //
@@ -27,8 +29,13 @@ $Config = new Config();
 //
 $Client = new Client($Config);
 
+echo "Bridge found: " . $Config->getConfigValue('bridgeIp') . "\n";
+echo "Bridge authenticated: " . $Config->getConfigValue('bridgeKey') . "\n";
+
 //var_dump($Client->getConfig());
 //var_dump($Client->getLights());
 //var_dump($Client->getLightInfo(3));
 
 var_dump($Client->setLightState(3, array('on' => true, 'alert' => 'select')));
+
+echo "</pre>";

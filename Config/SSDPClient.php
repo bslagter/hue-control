@@ -75,7 +75,8 @@ class SSDPClient
 	private function findBridgeForIp($ipAddress)
 	{
 		if ($this->debug) {
-			echo 'Searching on ' . $ipAddress . "\n";
+			echo 'Searching for bridge on ' . $ipAddress . "... \n";
+			flush();
 		}
 
 		$stream = stream_socket_server('udp://' . $ipAddress . ':1900', $errorNumber, $errorString, STREAM_SERVER_BIND);

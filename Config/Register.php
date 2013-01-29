@@ -50,6 +50,7 @@ class Register
 			if (!empty($response[0]['error']['type']) && $response[0]['error']['type'] == 101) {
 
 				echo "Waiting till button is pressed...\n";
+				flush();
 
 				// wait till button is pressed...
 				sleep(1);
