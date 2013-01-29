@@ -1,27 +1,22 @@
-###
+# Config file
+config.yaml
+
 # PHPStorm project files
-###
 /.metadata
 /.buildpath
 /.idea
 Thumbs.db
 
-###
 # Temporary files
-###
 *~
 *.orig
 
-###
-# ECLIPSE IDE project files
-##
+# Eclipse project files
 .project
 .cache
 .cache/*
 .settings
 .settings/*
 
-###
 # Mac OS X directory preferences
-###
 .DS_Store
