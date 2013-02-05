@@ -3,12 +3,10 @@
  * @author Bert Slagter
  */
 
-#todo: check of CURL + YAML zijn geinstalleerd
-
 namespace HueControl;
 use \HueControl\Config\Config;
 use \HueControl\Config\Environment;
-use \HueControl\Client\Client;
+use \HueControl\Bridge\BridgeHue;
 
 //
 // Register autoload that loads classes based on namespace
@@ -16,6 +14,7 @@ use \HueControl\Client\Client;
 require_once( __DIR__ . '/Autoload.php');
 spl_autoload_register(array('HueControl\Autoload', 'autoload'));
 
+#todo Use logger
 echo "<pre>";
 
 //
@@ -27,30 +26,30 @@ $Environment->check();
 //
 // Load config,
 //
-// If no config found:
-// - create new config file
-// - find bridge and start pairing process
-//
 $Config = new Config();
 
 //
-// Initiate Client
+// Initiate Hue Bridge
 //
-$Client = new Client($Config);
-
-echo "Bridge found: " . $Config->getConfigValue('bridgeIp') . "\n";
-echo "Bridge authenticated: " . $Config->getConfigValue('bridgeKey') . "\n";
-
-//var_dump($Client->getConfig());
-//var_dump($Client->getLights());
-
-
-//var_dump($Client->setLightState(2, array('alert' => 'select1')));
-//var_dump($Client->setLightState(2, array('xy' => array(0.8, 0.1))));
-//var_dump($Client->setLightState(2, array('xy' => array(0.3, 0.1))));
-var_dump($Client->setLightState(2, array('xy' => array(0.5, 0.43))));
+// If no Hue Bridge configured:
+// - find bridge
+// - start pairing process
+//
+//
+$BridgeHue = new BridgeHue($Config);
 
 
-var_dump($Client->getLightInfo(2));
+// Turn the light off
+var_dump($BridgeHue->setLightState(3, array('on' => false)));
+sleep(1);
 
+// Xenon-style on
+var_dump($BridgeHue->setLightState(3, array('on' => true, 'ct' => 154, 'bri' => 200, 'transitiontime' => 1)));
+var_dump($BridgeHue->setLightState(3, array('on' => true, 'ct' => 343, 'bri' => 100, 'transitiontime' => 7)));
+
+// Dump light info
+var_dump($BridgeHue->getLightInfo(3));
+
+
+#todo Use logger
 echo "</pre>";

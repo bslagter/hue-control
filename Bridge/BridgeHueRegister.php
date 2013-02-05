@@ -1,11 +1,11 @@
 <?php
 
-namespace HueControl\Config;
+namespace HueControl\Bridge;
 
 /**
  * @author Bert Slagter
  */
-class Register
+class BridgeHueRegister
 {
 	/**
 	 * @var string

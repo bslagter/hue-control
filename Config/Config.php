@@ -15,7 +15,6 @@ class Config
 	public function __construct()
 	{
 		$this->loadConfig();
-		$this->checkConfig();
 	}
 
 	/**
@@ -66,35 +65,10 @@ class Config
 		file_put_contents($this->getUserConfigPath(), yaml_emit($this->data));
 	}
 
-	private function checkConfig()
-	{
-		$bridgeIp = $this->getConfigValue('bridgeIp');
-
-		if (empty($bridgeIp)) {
-			$SSDPClient = new SSDPClient();
-			$bridgeIp = $SSDPClient->findBridge();
-
-			if (!empty($bridgeIp)) {
-				$this->setConfigValue('bridgeIp', $bridgeIp);
-			} else {
-				die ('Could not find bridge');
-			}
-		}
-
-		$bridgeKey = $this->getConfigValue('bridgeKey');
-
-		if (empty($bridgeKey)) {
-			$Register = new Register($bridgeIp);
-			$bridgeKey = $Register->getNewKey();
-
-			if (!empty($bridgeKey)) {
-				$this->setConfigValue('bridgeKey', $bridgeKey);
-			} else {
-				die ('Could not register at the bridge');
-			}
-		}
-	}
-
+	/**
+	 * @param string $name
+	 * @return mixed
+	 */
 	public function getConfigValue($name)
 	{
 		if (isset($this->data[$name])) {
@@ -104,6 +78,10 @@ class Config
 		}
 	}
 
+	/**
+	 * @param string $name
+	 * @param string $value
+	 */
 	public function setConfigValue($name, $value)
 	{
 		$this->data[$name] = $value;
