@@ -28,26 +28,47 @@ class BridgeArduinoKaKu implements Bridge
 		$this->checkLights();
 	}
 
+	/**
+	 * @param $lightId
+	 * Turns on light at specific ID
+	 */
 	public function turnLightOn($lightId)
 	{
 		$this->broadcastMessage($this->data[$lightId]["on"]);
 	}
 
+	/**
+	 * @param $lightId
+	 * Turns off light at specific ID
+	 */
 	public function turnLightOff($lightId)
 	{
 		$this->broadcastMessage($this->data[$lightId]["off"]);
 	}
 
-	public function getLightInfo($lightNumber)
+	/**
+	 * @param $lightID
+	 * @return array
+	 * Returns all details that are stored for a specific light
+	 */
+	public function getLightInfo($lightId)
 	{
-		return $this->data[$lightNumber];
+		return $this->data[$lightId];
 	}
 
+	/**
+	 * @return array
+	 * Returns an overview of all lights that are stored.
+	 */
 	public function getLights()
 	{
 		return $this->data;
 	}
 
+	/**
+	 * @param $msg
+	 * Sends out command to Arduino, over UDP broadcast, on port 8888
+	 */
 	private function broadcastMessage($msg)
 	{
 		$sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
@@ -57,6 +78,10 @@ class BridgeArduinoKaKu implements Bridge
 		socket_close($sock);
 	}
 
+	/**
+	 * Checks if the Arduino Bridge can be properly configured and has known lights and commands.
+	 * If there is no "kakulights" section in the config, there will be made one as an example
+	 */
 	private function checkLights()
 	{
 		
@@ -65,7 +90,7 @@ class BridgeArduinoKaKu implements Bridge
 		if ($this->data == null) {
 			$this->data = array(
 				1 => array(
-	    			"name" => "Studeerkamerlamp",
+	    			"name" => "Dummy KaKu light",
 	    			"on" => "O,2,176978,329,0000",
 	    			"off" => "O,2,176982,329,0000",
 	    			)

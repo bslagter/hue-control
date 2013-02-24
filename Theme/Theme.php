@@ -32,10 +32,17 @@ class Theme
 		$this->checkThemes();
 	}
 
+	/**
+	 * @param $themeId
+	 * @return string
+	 * Set specific theme, returns all set light states from individual lamps.
+	 * The returnvalue can be used as feedback to display what lamps have been switched into what.
+	 */
 	public function setTheme($themeId)
 	{
 		$return = "";
 
+		//echo "\n\nStarting Theme:'" . $this->data[$themeId]['name'] . "'\n";
 
 		foreach($this->data[$themeId]['lightstates'] as $lightstate) {
 			if($lightstate['bridge'] == "BridgeHue") {
@@ -57,11 +64,13 @@ class Theme
 				//Other types of bridges are not yet implemented
 			}
 		}
+		//echo $return;
 		return $return;
 	}
 
 	/**
-	 * Get all available themes
+	 * @return array
+	 * Returns an overview of all stored themes.
 	 */
 	public function getThemes()
 	{
@@ -69,7 +78,8 @@ class Theme
 	}
 
 	/**
-	 * Check whether we have Themes in the config file, otherwise, make a placeholder for it.
+	 * Check whether there are Themes in the config file.
+	 * If there is no "themes" section in the config, there will be made one as an example, with 4 themes
 	 */
 	private function checkThemes()
 	{
