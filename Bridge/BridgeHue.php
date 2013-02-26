@@ -134,7 +134,7 @@ class BridgeHue implements Bridge
 		}
 
 		#todo Use logger
-		echo "Bridge found: " . $bridgeIp . "\n";
-		echo "Bridge authenticated: " . $bridgeKey . "\n";
+		//echo "Bridge found: " . $bridgeIp . "\n";
+		//echo "Bridge authenticated: " . $bridgeKey . "\n";
 	}
 }
